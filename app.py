@@ -64,13 +64,25 @@ def create_app(profile):
     # inlining route
     @app.route('/')
     def home():
-        return render_template('home.html')
+        # --- demo purposes --
+        try:
+            db.create_all()
+        except:
+            pass 
 
+        try:
+            u = User(email='admin@domain.com')
+            u.password = 'pass'
+            db.session.add(u)
+            db.session.commit()
+        except: 
+            pass
+        return render_template('home.html')
+        # ---
+        
     return app
 
 
 flask_env = os.environ.get("FLASK_ENV", default="development")
 app = create_app(flask_env)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5005, debug=True, ssl_context='adhoc')
