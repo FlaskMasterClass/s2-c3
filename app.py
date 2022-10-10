@@ -71,10 +71,12 @@ def create_app(profile):
             pass 
 
         try:
-            u = User(email='admin@domain.com')
-            u.password = 'pass'
-            db.session.add(u)
-            db.session.commit()
+            u = db.session.query(User).filter_by(email='admin@domain.com').first()
+            if u is None:
+                u = User(email='admin@domain.com')
+                u.password = 'pass'
+                db.session.add(u)
+                db.session.commit()
         except: 
             pass
         return render_template('home.html')
