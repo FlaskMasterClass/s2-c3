@@ -37,4 +37,4 @@ def validate_login():
 @auth_blueprint.route("/logout", methods=["GET"])
 def logout():
     logout_user()
-    return redirect(url_for("home"))
+    return redirect(url_for("home", _external=True, _scheme='https'))
